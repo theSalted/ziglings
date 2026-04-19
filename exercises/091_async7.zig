@@ -49,8 +49,8 @@ fn increment(io: std.Io, state: *SharedState, times: u32) void {
     for (0..times) |_| {
         // Acquire the lock before modifying shared state.
         // What Mutex method blocks until the lock is acquired?
-        state.mutex.??? catch return;
-        defer state.mutex.unlock(); // <-- what's missing here?
+        state.mutex.lock(io) catch return;
+        defer state.mutex.unlock(io); // <-- what's missing here?
 
         state.counter += 1;
     }
